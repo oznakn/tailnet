@@ -1,7 +1,7 @@
 ARG TSVERSION=1.76.6
 ARG TSFILE=tailscale_${TSVERSION}_amd64.tgz
 
-FROM alpine:latest as tailscale
+FROM alpine:3.19 as tailscale
 ARG TSFILE
 WORKDIR /app
 
@@ -10,7 +10,7 @@ RUN wget https://pkgs.tailscale.com/stable/${TSFILE} && \
 COPY . ./
 
 
-FROM alpine:latest
+FROM alpine:3.19
 # alpine:3.19 links iptables to iptables-nft https://gitlab.alpinelinux.org/alpine/aports/-/commit/f87a191922955bcf5c5f3fc66a425263a4588d48.
 # iptables-nft requires kernel support for nft, which is currently not available in Fly.io,
 # so we remove the links and ensure that the iptables-legacy version is used.
